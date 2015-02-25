@@ -8,11 +8,11 @@ namespace FootballManager
 {
     public class Manager
     {
-        public void ChangePlayerPosition(Player player, PlayerPosition позиција)
+        public void ChangePlayerPosition(Player player, PlayerPosition position)
         {
-            if (player.IsPositionAllowed(позиција))
+            if (player.IsPositionAllowed(position))
             {
-                player.CurrentPosition = позиција;
+                player.CurrentPosition = position;
             }
             else
             {
