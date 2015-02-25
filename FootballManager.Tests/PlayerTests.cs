@@ -1,14 +1,28 @@
 ﻿using System;
+using System.Collections.Generic;
 using Xunit;
 
 namespace FootballManager.Tests
 {
     public class PlayerTests
     {
-        [Fact(DisplayName = "Sanity check")]
-        public void SanityCheck()
+        [Fact(DisplayName = "Can change position")]
+        public void CanChangePosition()
         {
-            Assert.Equal(true, true);
-        }
+            var player = new Player(PlayerPosition.GK)
+            {
+                Name = "Aleksandar"
+            };
+            var playerPositions = new List<PlayerPosition>()
+            {
+                PlayerPosition.RB,
+                PlayerPosition.GK
+            };
+            player.PreferredPositions = playerPositions;
+
+            player.ChangePosition(PlayerPosition.RB);
+
+            Assert.True(player.Position == PlayerPosition.RB);
+        } 
     }
 }

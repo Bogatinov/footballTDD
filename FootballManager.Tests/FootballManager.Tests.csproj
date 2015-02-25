@@ -65,9 +65,16 @@
   <ItemGroup>
     <Compile Include="PlayerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sanity.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FootballManager\FootballManager.csproj">
+      <Project>{66D348E4-9989-4953-A2D5-DB207D575CF5}</Project>
+      <Name>FootballManager</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
