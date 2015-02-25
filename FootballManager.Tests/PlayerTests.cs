@@ -6,23 +6,28 @@ namespace FootballManager.Tests
 {
     public class PlayerTests
     {
-        [Fact(DisplayName = "Can change position")]
-        public void CanChangePosition()
+
+        [Fact(DisplayName = "Place player on preferred position")]
+        public void CanPlacePlayerOnLearnedPosition()
         {
-            var player = new Player(PlayerPosition.GK)
-            {
-                Name = "Aleksandar"
-            };
-            var playerPositions = new List<PlayerPosition>()
-            {
-                PlayerPosition.RB,
-                PlayerPosition.GK
-            };
-            player.PreferredPositions = playerPositions;
+            //Arrange
+            var player = new Player();
+            var manager = new Manager();
+            manager.TeachPlayerNewPosition(player, PlayerPosition.GK);
 
-            player.ChangePosition(PlayerPosition.RB);
+            //Act
+            manager.ChangePlayerPosition(player, PlayerPosition.GK);
 
-            Assert.True(player.Position == PlayerPosition.RB);
-        } 
+            //Assert
+            Assert.Equal(PlayerPosition.GK, player.CurrentPosition);
+        }
+
+        [Fact(DisplayName = "Do not place player on unpreferred position")]
+        public void CanNotPlacePlayerOnNotLearnedPosition()
+        {
+            var player = new Player();
+            var manager = new Manager();
+            Assert.ThrowsAny<Exception>(() => manager.ChangePlayerPosition(player, PlayerPosition.GK));
+        }
     }
 }

@@ -8,60 +8,22 @@ namespace FootballManager
 {
     public class Player
     {
-        public string Name { get; set; }
-        public string Surname { get; set; }
-        private PlayerPosition _currentPosition { get; set; }
-        public IList<PlayerPosition> PreferredPositions { get; set; }
+        private readonly IList<PlayerPosition> _preferredPositions;
+        public PlayerPosition CurrentPosition { get;set; }
 
-        public CoachManager Manager { get; set; }
-
-        public PlayerPosition Position { get { return _currentPosition; } }
-
-        private Player()
+        public Player()
         {
-            PreferredPositions = new List<PlayerPosition> { PlayerPosition.GK };
+            _preferredPositions = new List<PlayerPosition>();
         }
 
-        public Player(PlayerPosition position) : this()
+        public void LearnPosition(PlayerPosition newPosition)
         {
-            this.ChangePosition(position);
+            _preferredPositions.Add(newPosition);
         }
 
-        public void ChangePosition(PlayerPosition newPosition)
+        public bool IsPositionAllowed(PlayerPosition position)
         {
-            if (PreferredPositions.Contains(_currentPosition))
-            {
-                _currentPosition = newPosition;
-
-            }
-            else
-            {
-                throw new Exception("Cant change position if player does not like it");
-            }
-        }
-    }
-
-    public class CoachManager
-    {
-        public string Name { get; set; }
-
-        public IList<Player> myPlayers { get; set; }
-
-        public CoachManager()
-        {
-            myPlayers = new List<Player>();
-        }
-        public void PredefinePostions(Player player, List<PlayerPosition> positions)
-        {
-            myPlayers[0].PreferredPositions = positions;
-        }
-
-        public void ChangePlayerPosition(Player player, PlayerPosition newPosition)
-        {
-            foreach (Player p in myPlayers.Where(t => t.Name == player.Name))
-            {
-                p.ChangePosition(newPosition);
-            }
+            return _preferredPositions.Contains(position);
         }
     }
 
