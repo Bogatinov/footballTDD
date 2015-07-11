@@ -1,23 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FootballManager
 {
     public class TransferContract
     {
-        public int Id { get; private set; }
-        private Team _oldTeam;
-        private Team _newTeam;
-        
+        private readonly Team _newTeam;
+        private readonly Team _oldTeam;
+
         public TransferContract(Team oldTeam, Team newTeam)
         {
             Id = new Random().Next(1, 1000);
             _oldTeam = oldTeam;
             _newTeam = newTeam;
         }
+
+        public int Id { get; private set; }
 
         public int Transfer(Player player)
         {

@@ -1,22 +1,16 @@
 ﻿using System;
-using System.Net.NetworkInformation;
-using System.Runtime.Remoting.Messaging;
 using Xunit;
 
 namespace FootballManager.Tests
 {
     public class TeamTestMotherObject
     {
-        public TeamTestMotherObject()
-        {
-            
-        }
     }
 
     public class TeamTests
     {
-        private Player messi;
-        private Team barcelona;
+        private readonly Team barcelona;
+        private readonly Player messi;
 
         public TeamTests()
         {
@@ -27,7 +21,7 @@ namespace FootballManager.Tests
         [Fact(DisplayName = "Can sign a free agent player")]
         public void CanSignFreeAgentPlayer()
         {
-            bool successfulContract = barcelona.SignContract(messi);
+            var successfulContract = barcelona.SignContract(messi);
 
             Assert.True(successfulContract);
         }
@@ -38,7 +32,7 @@ namespace FootballManager.Tests
             barcelona.SignContract(messi);
             var arsenal = new Team("Arsenal");
 
-            bool successfulContract = arsenal.SignContract(messi);
+            var successfulContract = arsenal.SignContract(messi);
 
             Assert.False(successfulContract);
         }
@@ -49,6 +43,7 @@ namespace FootballManager.Tests
          * When transfer season and Arsenal buys Messi
          * Then Messi signed by Arsenal
          */
+
         [Fact(DisplayName = "Transfer player to new team in transfer season")]
         public void TransferPlayerToNewTeam()
         {
@@ -56,7 +51,7 @@ namespace FootballManager.Tests
             barcelona.SignContract(messi);
             var arsenal = new Team("Arsenal");
             var contract = new TransferContract(barcelona, arsenal);
-            
+
             //Act = WHEN
             var contractId = contract.Transfer(messi);
 
