@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FootballManager
+namespace Game
 {
     public class Player
     {

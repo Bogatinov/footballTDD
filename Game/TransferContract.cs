@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FootballManager
+namespace Game
 {
     public class TransferContract
     {
@@ -14,18 +14,14 @@ namespace FootballManager
             _newTeam = newTeam;
         }
 
-        public int Id { get; private set; }
+        private int Id { get; }
 
         public int Transfer(Player player)
         {
             var success = _oldTeam.RemovePlayer(player);
-            if (success)
-            {
-                _newTeam.SignContract(player);
-                return Id;
-            }
-
-            return 0;
+            if (!success) return 0;
+            _newTeam.SignContract(player);
+            return Id;
         }
     }
 }

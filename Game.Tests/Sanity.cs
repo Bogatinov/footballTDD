@@ -1,6 +1,6 @@
 ﻿using Xunit;
 
-namespace FootballManager.Tests
+namespace Game.Tests
 {
     public class Sanity
     {

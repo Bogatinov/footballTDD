@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace FootballManager
+namespace Game
 {
     public class Team
     {

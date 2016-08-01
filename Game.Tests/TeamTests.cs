@@ -1,27 +1,23 @@
 ﻿using System;
 using Xunit;
 
-namespace FootballManager.Tests
+namespace Game.Tests
 {
-    public class TeamTestMotherObject
-    {
-    }
-
     public class TeamTests
     {
-        private readonly Team barcelona;
-        private readonly Player messi;
+        private readonly Player _player;
+        private readonly Team _team;
 
         public TeamTests()
         {
-            messi = new Player("Messi");
-            barcelona = new Team("Barcelona");
+            _player = new Player("player1");
+            _team = new Team("team1");
         }
 
         [Fact(DisplayName = "Can sign a free agent player")]
         public void CanSignFreeAgentPlayer()
         {
-            var successfulContract = barcelona.SignContract(messi);
+            var successfulContract = _team.SignContract(_player);
 
             Assert.True(successfulContract);
         }
@@ -29,10 +25,10 @@ namespace FootballManager.Tests
         [Fact(DisplayName = "Can not sign a signed player to team")]
         public void CanNotSignAlreadySignedPlayer()
         {
-            barcelona.SignContract(messi);
-            var arsenal = new Team("Arsenal");
+            _team.SignContract(_player);
+            var arsenal = new Team("team2");
 
-            var successfulContract = arsenal.SignContract(messi);
+            var successfulContract = arsenal.SignContract(_player);
 
             Assert.False(successfulContract);
         }
@@ -48,12 +44,12 @@ namespace FootballManager.Tests
         public void TransferPlayerToNewTeam()
         {
             //Arrange = GIVEN
-            barcelona.SignContract(messi);
-            var arsenal = new Team("Arsenal");
-            var contract = new TransferContract(barcelona, arsenal);
+            _team.SignContract(_player);
+            var arsenal = new Team("team2");
+            var contract = new TransferContract(_team, arsenal);
 
             //Act = WHEN
-            var contractId = contract.Transfer(messi);
+            var contractId = contract.Transfer(_player);
 
             //Assert = THEN
             Assert.NotEqual(0, contractId);
@@ -62,19 +58,19 @@ namespace FootballManager.Tests
         [Fact(DisplayName = "Can not transfer free agent in transfer season")]
         public void CanNotTransferFreeAgent()
         {
-            var arsenal = new Team("Arsenal");
+            var arsenal = new Team("team2");
             var contract = new TransferContract(null, arsenal);
 
-            Assert.Throws<NullReferenceException>(() => contract.Transfer(messi));
+            Assert.Throws<NullReferenceException>(() => contract.Transfer(_player));
         }
 
         [Fact(DisplayName = "Can not transfer free agent in transfer season with falsified contract")]
         public void CanNotTransferFreeAgentWithFalsifiedContract()
         {
             var vardar = new Team("Vardar");
-            var contract = new TransferContract(vardar, barcelona);
+            var contract = new TransferContract(vardar, _team);
 
-            var contractId = contract.Transfer(messi);
+            var contractId = contract.Transfer(_player);
 
             Assert.Equal(0, contractId);
         }
