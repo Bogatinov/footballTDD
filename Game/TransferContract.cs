@@ -18,8 +18,7 @@ namespace Game
 
         public int Transfer(Player player)
         {
-            var success = _oldTeam.RemovePlayer(player);
-            if (!success) return 0;
+            _oldTeam.RemovePlayer(player);
             _newTeam.SignContract(player);
             return Id;
         }

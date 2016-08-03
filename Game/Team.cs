@@ -25,15 +25,13 @@ namespace Game
             return true;
         }
 
-        public bool RemovePlayer(Player player)
+        public void RemovePlayer(Player player)
         {
-            if (_players.Remove(player))
-            {
+            if(_players.Count == 0)
+                throw new Exception("There are no players");
+            var result = _players.Remove(player);
+            if (result)
                 player.TeamId = 0;
-                return true;
-            }
-
-            return false;
         }
     }
 }

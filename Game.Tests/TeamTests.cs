@@ -5,14 +5,34 @@ namespace Game.Tests
 {
     public class TeamTests
     {
-        private readonly Player _player;
-        private readonly Team _team;
+        private Player _player;
+        private Team _team;
 
         public TeamTests()
         {
             _player = new Player("player1");
             _team = new Team("team1");
         }
+
+        [Fact(DisplayName = "Can not remove player from team without players")]
+        public void CanNotRemovePlayerFromTeamWithoutPlayers()
+        {
+            //Act/Assert
+            Assert.Throws<Exception>(() => _team.RemovePlayer(_player));
+        }
+
+        [Fact(DisplayName = "Make player free agent")]
+        public void MakePlayerFreeAgent()
+        {
+            _team.SignContract(_player);
+
+            //Act
+            _team.RemovePlayer(_player);
+
+            //Assert
+            Assert.Equal(0, _player.TeamId);
+        }
+
 
         [Fact(DisplayName = "Can sign a free agent player")]
         public void CanSignFreeAgentPlayer()
@@ -22,11 +42,11 @@ namespace Game.Tests
             Assert.True(successfulContract);
         }
 
-        [Fact(DisplayName = "Can not sign a signed player to team")]
+        [Theory(DisplayName = "Can not sign a signed player to team")]
         public void CanNotSignAlreadySignedPlayer()
         {
             _team.SignContract(_player);
-            var arsenal = new Team("team2");
+            var arsenal = new Team("test1");
 
             var successfulContract = arsenal.SignContract(_player);
 
@@ -68,11 +88,9 @@ namespace Game.Tests
         public void CanNotTransferFreeAgentWithFalsifiedContract()
         {
             var vardar = new Team("Vardar");
-            var contract = new TransferContract(vardar, _team);
+            var contract = new TransferContract(_team, vardar);
 
-            var contractId = contract.Transfer(_player);
-
-            Assert.Equal(0, contractId);
+            Assert.Throws<Exception>(() => contract.Transfer(_player)); 
         }
     }
 }
